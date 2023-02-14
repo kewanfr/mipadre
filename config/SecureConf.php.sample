@@ -1,0 +1,27 @@
+<?php
+class SecureConf
+{
+    static $databases = array(
+        'local' => array(
+            'host' => 'localhost',
+            'port' => ':3306',
+            'database' => 'mipadre',
+            'login' => 'user',
+            'password' => 'password'
+        )
+    ); // Configuration de la base de données
+
+    static $dbConf = "local";
+
+    static $RegisterToken = "1234567890"; // Token pour acceder à la page d'inscription (à changer)
+
+    static $ExternalUrl = "http://127.0.0.1"; // URL externe du site pour les QRCode (à changer)
+
+    static $env = "dev"; // Environnement du site (local, dev, prod)
+
+    static $pageTitlePrefix = ""; // Préfixe du titre de la page
+
+    static $googleMapsAPIKEY = ""; // Clé API Google Maps
+
+}
+?>
