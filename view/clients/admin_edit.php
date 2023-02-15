@@ -5,7 +5,6 @@
 
 <form method="POST">
   <div class="form-group row">
-    <!-- <= $this->Form->input("id", "ID", array("readonly" => true)) ?> -->
     <div class="col-md-5">
       <?= $this->Form->input("name", "Nom", array("required" => true)) ?>
     </div>

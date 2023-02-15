@@ -4,7 +4,7 @@
 <h2 class="text-center">Liste des Clients</h2>
 <a type="button" class="btn btn-info mb-4" href="<?= Router::url("admin/clients/edit/") ?>">Ajouter un client</a>
 
-<div id='map' style='width:100%;height:50vh;margin-bottom: 20px;'></div>
+<div id='map' style='width:100%;height:60vh;margin-bottom: 20px;'></div>
 
 <table id="cavistes-table" class="table table-striped table-bordered table-hover display">
   <thead>
@@ -46,6 +46,16 @@
 </table>
 <br>
 
+<?php 
+
+// find in $clients nb_bouteilles max
+$centerClient = $clients[0];
+foreach ($clients as $key => $client) {
+  if($client->nb_bouteilles > $centerClient->nb_bouteilles) $centerClient = $client;
+}
+
+?>
+
 <script>
   
   var map;
@@ -53,8 +63,8 @@
   var infowindows = [];
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 47.0450268, lng: -1.2626808},
-      zoom: 10,
+      center: {lat: <?= $centerClient->lat ?>, lng: <?= $centerClient->lon ?>},
+      zoom: 8,
       mapTypeControl: false
     });
     <?php
