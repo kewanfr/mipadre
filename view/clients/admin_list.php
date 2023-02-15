@@ -17,7 +17,7 @@
             <label class="custom-control-label" for="allMapSwitch"></label>
           </div></th>
       <th scope="col" name="adresse">Adresse</th>
-      <th scope="col" name="actions" style="max-width: 9vw">Actions</th>
+      <th scope="col" name="actions">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -35,8 +35,11 @@
         </td>
         <td><?= $client->adresse ?></td>
         <td>
-          <a type="button" class="btn btn-info btn-sm" href="<?= Router::url("admin/clients/edit/" . $client->id) ?>">Editer</a>
-          <a type="button" class="btn btn-warning btn-sm" href="<?= Router::url("admin/clients/generateqr/" . $client->id) ?>">QR Code</a>
+          <div class="nowrap">
+            <a type="button" class="btn btn-info btn-sm" href="<?= Router::url("admin/clients/edit/" . $client->id) ?>">Editer</a>
+            <a type="button" class="btn btn-warning btn-sm" href="<?= Router::url("admin/clients/generateqr/" . $client->id) ?>">QR Code</a>
+
+          </div>
         </td>
       </tr>
 
