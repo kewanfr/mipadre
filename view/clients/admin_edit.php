@@ -5,20 +5,17 @@
 
 <form method="POST">
   <div class="form-group row">
-    <div class="col-md-1">
-      <?= $this->Form->input("id", "ID", array("readonly" => true)) ?>
-    </div>
-    <div class="col">
+    <!-- <= $this->Form->input("id", "ID", array("readonly" => true)) ?> -->
+    <div class="col-md-5">
       <?= $this->Form->input("name", "Nom", array("required" => true)) ?>
     </div>
-  </div>
-  <div class="form-group">
-    <?= $this->Form->input("mail", "Adresse email") ?>
-
+    <div class="col">
+      <?= $this->Form->input("adresse", "Adresse") ?>
+    </div>
   </div>
   <div class="form-group row">
-    <div class="col-md-7">
-      <?= $this->Form->input("adresse", "Adresse") ?>
+    <div class="col-md-5">
+      <?= $this->Form->input("mail", "Adresse email") ?>
     </div>
     <div class="col">
       <?= $this->Form->input("telephone", "Téléphone") ?>
