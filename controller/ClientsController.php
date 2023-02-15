@@ -121,7 +121,47 @@ class ClientsController extends Controller
   function admin_list(){
     $this->loadModel('Client');
     $d['clients'] = $this->Client->find(array());
+    $addresses = array();
+
+    foreach ($d['clients'] as $key => $client) {
+
+      if((empty($client->lat) || empty($client->lon)) && !empty($client->adresse)){
+        $coordinates = getCoordinatesFromAddress($client->adresse);
+        if($coordinates){
+          $client->lat = $coordinates['lat'];
+          $client->lon = $coordinates['lng'];
+          $this->Client->save($client);
+        }
+      }
+
+      if(empty($client->name)){
+        $client->name = "Client sans nom";
+      }
+      if(empty($client->nb_bouteilles)){
+        $client->nb_bouteilles = 0;
+        $this->Client->save($client);
+      }
+
+      if($client->nb_bouteilles == 0){
+        $client->showMap = false;
+        $client->badgeColor = "success";
+        $client->markerColor = "green";
+      }else if ($client->nb_bouteilles < 3) {
+        $client->showMap = true;
+        $client->badgeColor = "warning";
+        $client->markerColor = "orange";
+      }else{
+        $client->showMap = true;
+        $client->badgeColor = "danger";
+        $client->markerColor = "red";
+      }
+
+      $client->mapName = str_replace("'", "\'", $client->name);
+      if(!empty($client->lat) && !empty($client->lon) && !empty($client->adresse) ){
+        $addresses[$key] = $client;
+      }
+    }
+    $d['addresses'] = $addresses;
     $this->set($d);
   }
 }
-?>
