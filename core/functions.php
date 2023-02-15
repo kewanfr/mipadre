@@ -35,4 +35,17 @@ function generateQR($id, $token)
   return $generateUrl;
 }
 
+function getCoordinatesFromAddress($address)
+{
+  $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address) . "&key=".SecureConf::$googleMapsAPIKEY;
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $response = curl_exec($ch);
+  curl_close($ch);
+
+  $response = json_decode($response, true); // Décodage de la réponse en tableau PHP
+  return isset($response['results'][0]['geometry']['location']) ? $response['results'][0]['geometry']['location'] : false;// Renvoi des coordonnées
+}
 ?>
