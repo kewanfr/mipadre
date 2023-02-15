@@ -131,10 +131,12 @@ foreach ($clients as $key => $client) {
       if ($(this).attr('id') == "allMapSwitch") {
         return;
       }
-      if (!this.checked) {
-        markers[id].setMap(null);
-      } else {
-        markers[id].setMap(map);
+      if(markers[id]){
+        if (!this.checked) {
+          markers[id].setMap(null);
+        } else {
+          markers[id].setMap(map);
+        }
       }
     });
   });
