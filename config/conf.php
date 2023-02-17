@@ -12,10 +12,10 @@ class Conf
     static $QRTokenLength = 3; // Longueur du token pour les QRCode (à changer)
 
     static $majorVersion = 1; // Version majeure du site
-    static $minorVersion = 1; // Version mineure du site
-    static $patchVersion = 1; // Version de patch du site
+    static $minorVersion = 2; // Version mineure du site
+    static $patchVersion = 0; // Version de patch du site
     static $versionName = ""; // Nom de la version
-    static $versionDate = "14 Fev"; // Date de la version
+    static $versionDate = "17 Fev"; // Date de la version 
     static $version;
 
     static $copyright = "&copy;2023 Mi Padre"; // Texte du copyRight

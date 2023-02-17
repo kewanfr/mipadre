@@ -1,0 +1,102 @@
+.img-illustration {
+  width: 75%;
+  height: 40vh;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  margin-top: 10px;
+
+  max-width: 100%;
+}
+
+@media (max-width: 480px) {
+  .img-illustration {
+    height: 25vh;
+  }
+  .clientName h2{
+    font-size: 1.6em;
+  }
+}
+
+.clientName {
+  margin-top: 30px;
+  margin-bottom: 5px;
+  border: 2px solid #9c9c9c;
+  border-radius: 10px;
+  padding: 0 10px;
+  padding-bottom: 0;
+  display: inline-block;
+  
+}
+
+.clientName h2 {
+  position:relative;
+  top: -32px;
+  background-color: white;
+  display: inline-block;
+  padding: 0 10px 0 10px;
+  word-wrap: break-word;
+  max-width: 45vw;
+}
+
+.input-number-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.input-number {
+  width: 50px;
+  height: 30px;
+  font-size: 20px;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  margin: 0 10px;
+  padding: 5px;
+}
+
+.input-number-button {
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #eee;
+  color: #555;
+  cursor: pointer;
+}
+
+.input-number-button:hover {
+  background-color: #ddd;
+}
+
+.input-number-decrement {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-number-increment {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.group{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+#last-editbox{
+  border-radius: 5px;
+  border: 2px solid #ddd;
+  background-color: rgb(255, 233, 192);
+  padding: 10px;
+  text-align: center;
+  margin: 0 auto;
+  width: fit-content;
+}

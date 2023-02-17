@@ -37,7 +37,7 @@ function generateQR($id, $token)
 
 function getCoordinatesFromAddress($address)
 {
-  $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address) . "&key=".SecureConf::$googleMapsAPIKEY;
+  $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address) . "&key=" . SecureConf::$googleMapsAPIKEY;
 
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
@@ -46,6 +46,40 @@ function getCoordinatesFromAddress($address)
   curl_close($ch);
 
   $response = json_decode($response, true); // Décodage de la réponse en tableau PHP
-  return isset($response['results'][0]['geometry']['location']) ? $response['results'][0]['geometry']['location'] : false;// Renvoi des coordonnées
+  return isset($response['results'][0]['geometry']['location']) ? $response['results'][0]['geometry']['location'] : false; // Renvoi des coordonnées
+}
+
+function RelativeDate($timestampStr)
+{
+  $dateFormatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+  $now = time();
+  $timestamp = strtotime($timestampStr);
+  $diff = $now - $timestamp;
+
+  if (date('Y-m-d', $timestamp) == date('Y-m-d', $now)) {
+    return "aujourd'hui";
+  } elseif (date('Y-m-d', $timestamp) == date('Y-m-d', strtotime("-1 day"))) {
+    return "hier";
+  } else {
+    $dateFormatter->setPattern('d MMMM');
+    return "le " . $dateFormatter->format($timestamp);
+  }
+}
+
+function RelativeDatetime($timestampStr)
+{
+  $dateFormatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+  $now = time();
+  $timestamp = strtotime($timestampStr);
+  $diff = $now - $timestamp;
+
+  if (date('Y-m-d', $timestamp) == date('Y-m-d', $now)) {
+    return "aujourd'hui à " . date("H\hi", $timestamp);
+  } elseif (date('Y-m-d', $timestamp) == date('Y-m-d', strtotime("-1 day"))) {
+    return "hier à " . date("H\hi", $timestamp);
+  } else {
+    $dateFormatter->setPattern('d MMMM');
+    return "le " . $dateFormatter->format($timestamp) . " à " . date("H\hi", $timestamp);
+  }
 }
 ?>
