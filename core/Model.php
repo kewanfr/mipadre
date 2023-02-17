@@ -150,7 +150,8 @@ class Model
       }
     }
     if (isset($data->$key) && !empty($data->$key)) {
-      $sql = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $fields) . ' WHERE ' . $key . '=:' . $key;
+      $sql = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $fields);
+      $sql .= ' WHERE ' . $key . '=:' . $key;
       $this->id = $data->$key;
       $action = 'update';
     } else {
