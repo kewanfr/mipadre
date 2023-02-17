@@ -16,9 +16,15 @@ class ClientController extends Controller
     $requestData = $this->Client->getClient($client->id, "id, name, nb_bouteilles");
     $requestData->nb_bouteilles = $requestData->nb_bouteilles + 1;
     $this->Client->save($requestData);
-
-    $this->redirect('client/edit');
     $this->Session->setFlash('Une bouteille ajoutée !', 'success');
+
+    $client = $this->Client->getClient($client->id, "id, name, nb_bouteilles, updated");
+
+    $d['client'] = $client;
+    $d['id'] = $client->id;
+    $d['title'] = $client->name;
+
+    $this->set($d);
   }
 
   function edit()
@@ -32,9 +38,13 @@ class ClientController extends Controller
     $this->loadModel('Client');
     $client = $this->Client->getClient($client->id, "id, name, nb_bouteilles, updated");
     if ($this->request->data) {
+      $client->nb_bouteilles = $client->nb_bouteilles + $this->request->data->nb_bouteilles;
+      if($client->nb_bouteilles < 0){
+        $client->nb_bouteilles = 0;
+      }
       $this->Client->save((object) array(
         'id' => $client->id,
-        'nb_bouteilles' => $this->request->data->nb_bouteilles,
+        'nb_bouteilles' => $client->nb_bouteilles,
       ));
       $this->Session->setFlash('Nombre de bouteilles mis à jour avec succès !', 'success');
     }
@@ -45,7 +55,6 @@ class ClientController extends Controller
     $d['title'] = $client->name;
 
     $this->set($d);
-    $this->render("edit");
   }
 
   function qrlogin($client_id = null, $token = null)

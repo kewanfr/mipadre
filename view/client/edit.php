@@ -13,10 +13,10 @@
 
 <form action="<?= Router::url("client/edit") ?>" method="post">
   <div class="group">
-    <label for="nb_bouteilles">Modification</label>
+    <label for="nb_bouteilles">Ajout/retrait</label>
     <div class="input-number-container">
       <button type="button" class="input-number-button input-number-decrement">-</button>
-      <input type="number" class="input-number" name="nb_bouteilles" value="<?= $client->nb_bouteilles ?>" min="0" step="1">
+      <input type="number" class="input-number" name="nb_bouteilles" value="0" min="<?= 0 - $client->nb_bouteilles ?>" step="1">
       <button type="button" class="input-number-button input-number-increment">+</button>
     </div>
     <button type="submit" class="btn btn-success">Valider</button>
@@ -27,6 +27,8 @@
  
 <br>
 <script>
+  let nb_bouteilles = <?= $client->nb_bouteilles ?>;
+
   $(".input-number-increment").click(function() {
     var input = $(this).parent().find(".input-number");
     var currentVal = parseInt(input.val());
@@ -40,9 +42,17 @@
   $(".input-number-decrement").click(function() {
     var input = $(this).parent().find(".input-number");
     var currentVal = parseInt(input.val());
-    if (!isNaN(currentVal) && currentVal > 0) {
-      input.val(currentVal - 1);
+    if (!isNaN(currentVal)) {
+      input.val((currentVal + nb_bouteilles) > 0 ? (currentVal - 1) : (0 - nb_bouteilles));
     } else {
+      input.val(0);
+    }
+  });
+
+  $(".input-number").change(function() {
+    var input = $(this).parent().find(".input-number");
+    var currentVal = parseInt(input.val());
+    if (!isNaN(currentVal) && (currentVal + nb_bouteilles) < 0) {
       input.val(0);
     }
   });
