@@ -14,8 +14,11 @@
   <title><?= SecureConf::$pageTitlePrefix ?><?php echo isset($title_for_layout) ? $title_for_layout : Conf::$siteName; ?></title>
 
 </head>
+<?php 
+  $pageName = "home";
+?>
 
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-90">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
       <img src="<?= Router::webroot("img/logo.png") ?>" class="nav-logo" alt="<?= Conf::$siteName ?>">
@@ -47,11 +50,11 @@
     </div>
   </nav>
 
-  <div class="container py-4 h-100">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <div class="container py-4 h-90">
     <?php echo $this->Session->flash(); ?>
     <?php echo $content_for_layout; ?>
   </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
   <?php require "elements/footer.php" ?>
