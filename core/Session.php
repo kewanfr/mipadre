@@ -72,7 +72,6 @@ class Session{
   }
 
   public function isLoggedAs($type = "user"){
-    debug($_SESSION);
     switch ($type) {
       case 'admin':
         return isset($_SESSION['User']->id) && $_SESSION['User']->role == 'admin';

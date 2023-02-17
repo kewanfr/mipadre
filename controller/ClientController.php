@@ -30,7 +30,7 @@ class ClientController extends Controller
     $client = $this->Session->read('Guest');
 
     $this->loadModel('Client');
-    $client = $this->Client->getClient($client->id, "id, name, nb_bouteilles, reseted, updated");
+    $client = $this->Client->getClient($client->id, "id, name, nb_bouteilles, updated");
     if ($this->request->data) {
       $this->Client->save((object) array(
         'id' => $client->id,
@@ -38,7 +38,7 @@ class ClientController extends Controller
       ));
       $this->Session->setFlash('Nombre de bouteilles mis à jour avec succès !', 'success');
     }
-    $client = $this->Client->getClient($client->id, "id, name, nb_bouteilles, reseted, updated");
+    $client = $this->Client->getClient($client->id, "id, name, nb_bouteilles, updated");
 
     $d['client'] = $client;
     $d['id'] = $client->id;
@@ -47,28 +47,6 @@ class ClientController extends Controller
     $this->set($d);
     $this->render("edit");
   }
-
-  function add2()
-  {
-    if (!$this->Session->read('Guest')) {
-      $this->Session->setFlash('Vous devez être connecté pour accéder à cette page', 'danger');
-      $this->redirect('users/login');
-    }
-    $client = $this->Session->read('Guest');
-    $this->loadModel('Client');
-
-    if ($this->request->data) {
-      $this->Client->save($this->request->data);
-      $this->Session->setFlash('Nombre de bouteilles mis à jour avec succès !', 'success');
-    }
-
-    $d['id'] = $client->id;
-    $d['client'] = $this->Client->getClient($client->id, "id, name, nb_bouteilles");
-    $d['title'] = $d['client']->name;
-
-    $this->set($d);
-  }
-
 
   function qrlogin($client_id = null, $token = null)
   {
