@@ -11,7 +11,7 @@
   <p>Vous avez <strong><?= $client->nb_bouteilles ?></strong> <?= $client->nb_bouteilles > 1 ? "bouteilles revenues" : "bouteille revenue" ?></o>
 </div>
 
-<form action="<?= Router::url("/client/edit") ?>" method="post">
+<form action="<?= Router::url("client/edit") ?>" method="post">
   <div class="group">
     <label for="nb_bouteilles">Modification</label>
     <div class="input-number-container">
