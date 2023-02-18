@@ -2,7 +2,7 @@
 class Conf
 {
 
-    static $debug = 1; // 0 = Debug désactivé, 1 = Débug activé, 2 = Débug avancé
+    static $debug = 0; // 0 = Debug désactivé, 1 = Débug activé, 2 = Débug avancé
 
     static $siteName = 'Mi Padre'; // Nom du site Affiché dans le titre de la page
     static $navBarName = "Mi Padre"; // Nom du site affiché dans la barre de navigation
