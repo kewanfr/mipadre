@@ -57,10 +57,9 @@ class ClientController extends Controller
     $this->set($d);
   }
 
-  function qrlogin($client_id = null, $token = null)
+  function qrlogin($code = null, $token = null)
   {
-
-    if ($client_id == null || $token == null) {
+    if ($code == null || $token == null) {
       $this->Session->setFlash('Erreur de connexion', 'danger');
       $this->redirect('users/login');
     }
@@ -68,7 +67,7 @@ class ClientController extends Controller
     $this->loadModel('Guest');
     $guest = $this->Guest->findFirst(array(
       'conditions' => array(
-        'client_id' => $client_id,
+        'client_id' => $code,
         'QRToken' => $token
       )
     ));
@@ -76,7 +75,7 @@ class ClientController extends Controller
       $this->loadModel('Client');
       $client = $this->Client->findFirst(array(
         'conditions' => array(
-          'id' => $client_id
+          'code' => $code
         )
       ));
       if ($client) {
