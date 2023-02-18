@@ -11,33 +11,28 @@ class ClientsController extends Controller
 
     $this->loadModel('Guest');
     $this->loadModel('Client');
-    $d['client'] = $this->Client->findFirst(
-      array(
-        'conditions' => array(
-          'id' => $id
-        )
-      )
-    );
-    if(empty($d['client'])){
+    $d['client'] = $this->Client->getClient($id, "id, code, name");
+    $code = $d['client']->code;
+    if(empty($d['client']) || empty($code)){
       $this->e404('Cette page n\'existe pas');
     }
 
     $d['guest'] = $this->Guest->findFirst(
       array(
         'conditions' => array(
-          'client_id' => $id
+          'client_id' => $code
         )
       )
     );
     if(empty($d['guest'])){
       $guest = $this->Guest->save(array(
-        'client_id' => $id,
+        'client_id' => $code,
         'QRToken' => generateToken(Conf::$QRTokenLength)
       ));
       $d['guest'] = $this->Guest->findFirst(
         array(
           'conditions' => array(
-            'client_id' => $id
+            'client_id' => $code
           )
         )
       );
@@ -63,6 +58,11 @@ class ClientsController extends Controller
     if($this->request->data){
       
       $d['title'] = "Modifier ".$this->request->data->name;
+      $code = $this->request->data->code;
+      $code = str_replace("CLT", "", $code);
+      $code = intval(ltrim($code, "0"));
+      $this->request->data->code = "CLT".$code;
+
       if($d['mode'] == "edit"){
         $this->request->data->id = $id;
         $this->Client->save($this->request->data);
@@ -76,19 +76,12 @@ class ClientsController extends Controller
       $d['mode'] = "edit";
 
     }else if($d['mode'] == "edit"){
-        $this->request->data = $this->Client->findFirst(
-          array(
-            'conditions' => array(
-              'id' => $id
-            )
-            )
-          );
+        $this->request->data = $this->Client->getClient($id, "id, code, name, mail, adresse, telephone, nb_bouteilles");
         if(empty($this->request->data)){
           $this->e404('Cette page n\'existe pas');
         }
         $d['title'] = "Modifier ".$this->request->data->name;
       }
-
 
     $this->set($d);
   }
@@ -96,13 +89,7 @@ class ClientsController extends Controller
   function admin_delete($id){
 
     $this->loadModel('Client');
-    $client = $this->Client->findFirst(
-      array(
-        'conditions' => array(
-          'id' => $id
-        )
-        )
-      );
+    $client = $this->Client->getClient($id, "id, name");
     if(empty($client)){
       $this->e404('Cette page n\'existe pas');
     }
@@ -120,7 +107,7 @@ class ClientsController extends Controller
 
   function admin_list(){
     $this->loadModel('Client');
-    $d['clients'] = $this->Client->find(array());
+    $d['clients'] = $this->Client->find(array("fields" => "id, code, name, mail, adresse, telephone, nb_bouteilles, lat, lon"));
     $addresses = array();
 
     foreach ($d['clients'] as $key => $client) {
@@ -128,18 +115,23 @@ class ClientsController extends Controller
       if((empty($client->lat) || empty($client->lon)) && !empty($client->adresse)){
         $coordinates = getCoordinatesFromAddress($client->adresse);
         if($coordinates){
-          $client->lat = $coordinates['lat'];
-          $client->lon = $coordinates['lng'];
-          $this->Client->save($client);
+          $this->Client->save((object) array(
+            'id' => $client->id,
+            'lat' => $coordinates['lat'],
+            'lon' => $coordinates['lng']
+          ));
         }
       }
 
       if(empty($client->name)){
         $client->name = "Client sans nom";
       }
-      if(empty($client->nb_bouteilles)){
-        $client->nb_bouteilles = 0;
-        $this->Client->save($client);
+
+      if(!isset($client->nb_bouteilles)){
+        $this->Client->save((object)array(
+          'id' => $client->id,
+          'nb_bouteilles' => 0
+        ));
       }
 
       if($client->nb_bouteilles == 0){

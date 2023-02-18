@@ -5,6 +5,11 @@
 
 <form method="POST">
   <div class="form-group row">
+    <div class="col-md-3">
+      <?= $this->Form->input("code", "Code", array("required" => true)) ?>
+    </div>
+  </div>
+  <div class="form-group row">
     <div class="col-md-5">
       <?= $this->Form->input("name", "Nom", array("required" => true)) ?>
     </div>

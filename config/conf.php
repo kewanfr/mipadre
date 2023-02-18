@@ -12,10 +12,10 @@ class Conf
     static $QRTokenLength = 3; // Longueur du token pour les QRCode (à changer)
 
     static $majorVersion = 1; // Version majeure du site
-    static $minorVersion = 1; // Version mineure du site
-    static $patchVersion = 1; // Version de patch du site
+    static $minorVersion = 3; // Version mineure du site
+    static $patchVersion = 0; // Version de patch du site
     static $versionName = ""; // Nom de la version
-    static $versionDate = "14 Fev"; // Date de la version
+    static $versionDate = "18 Fev"; // Date de la version 
     static $version;
 
     static $copyright = "&copy;2023 Mi Padre"; // Texte du copyRight
@@ -44,6 +44,7 @@ Router::connect('admin', 'admin/clients/index');
 /**
  * Guest Routes
  */
-Router::connect('qr/:id/:token', 'client/qrlogin/id:([0-9]+)/token:([a-zA-Z0-9\-]+)');
+Router::connect('qr/:id/:token', 'client/qrlogin/id:([a-zA-Z0-9\-]+)/token:([a-zA-Z0-9\-]+)');
+// Router::connect('qr/:id/:token', 'client/qrlogin/id:(CLT[0-9]+)/token:([a-zA-Z0-9\-]+)');
 
 ?>

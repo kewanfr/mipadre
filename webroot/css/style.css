@@ -1,6 +1,11 @@
 @import './navbar.css';
 @import './footer.css';
-@import './index.css';
+@import './client.css';
+
+body {
+  min-height: 100vh;
+  position: relative;
+}
 
 .bold {
   font-weight: bold;

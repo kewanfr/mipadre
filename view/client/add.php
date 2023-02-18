@@ -1,10 +1,19 @@
-<h2 class="text-left"><?= $title ?></h2>
-<?= $this->Session->flash(); ?>
+<h2 class="text-center">Consigne Mi Padre</h2>
 
-<form method="POST">
-  <div class="form-group row">
-    <div class="col">
-      <p>Il y a <strong><?= $client->nb_bouteilles ?></strong> bouteilles dans votre stock</o>
-    </div>
+<?= $this->Session->flash(); ?>
+<img src="<?= Router::webroot("img/illustration.jpeg"); ?>" class="img-illustration" alt="illustration mipadre">
+<div class="text-center">
+  <div class="clientName">
+    <h2><?= $client->name ?></h2>
   </div>
-</form>
+</div>
+<div class="text-center">
+  <p>Vous avez <strong><?= $client->nb_bouteilles ?></strong> <?= $client->nb_bouteilles > 1 ? "bouteilles revenues" : "bouteille revenue" ?></o>
+</div>
+
+<div class="text-center">
+  <a href="<?= Router::url("client/edit") ?>" class="btn btn-primary">
+    Modification
+  </a>
+</div>
+ 

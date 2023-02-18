@@ -129,7 +129,10 @@ class Router
         $url = str_replace($v, $k, $url);
       }
     }
-    return str_replace("//", "/", BASE_URL . "/" . $url);
+    if (substr(BASE_URL, -1) == '/') {
+      return str_replace("//", "/", BASE_URL . $url);
+    }
+    return str_replace("//", "/", BASE_URL . '/' . $url);
   }
 
   static function webroot($url){
