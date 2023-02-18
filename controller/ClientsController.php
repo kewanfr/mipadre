@@ -58,6 +58,11 @@ class ClientsController extends Controller
     if($this->request->data){
       
       $d['title'] = "Modifier ".$this->request->data->name;
+      $code = $this->request->data->code;
+      $code = str_replace("CLT", "", $code);
+      $code = intval(ltrim($code, "0"));
+      $this->request->data->code = "CLT".$code;
+
       if($d['mode'] == "edit"){
         $this->request->data->id = $id;
         $this->Client->save($this->request->data);
