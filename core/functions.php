@@ -37,7 +37,11 @@ function generateQR($id, $token)
 
 function getCoordinatesFromAddress($address)
 {
+<<<<<<< HEAD
   $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address) . "&key=" . SecureConf::$googleMapsAPIKEY;
+=======
+  $url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($address) . "&key=".SecureConf::$googleMapsAPIKEY;
+>>>>>>> main
 
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
@@ -46,6 +50,7 @@ function getCoordinatesFromAddress($address)
   curl_close($ch);
 
   $response = json_decode($response, true); // Décodage de la réponse en tableau PHP
+<<<<<<< HEAD
   return isset($response['results'][0]['geometry']['location']) ? $response['results'][0]['geometry']['location'] : false; // Renvoi des coordonnées
 }
 
@@ -81,5 +86,8 @@ function RelativeDatetime($timestampStr)
     $dateFormatter->setPattern('d MMMM');
     return "le " . $dateFormatter->format($timestamp) . " à " . date("H\hi", $timestamp);
   }
+=======
+  return isset($response['results'][0]['geometry']['location']) ? $response['results'][0]['geometry']['location'] : false;// Renvoi des coordonnées
+>>>>>>> main
 }
 ?>

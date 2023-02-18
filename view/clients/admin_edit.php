@@ -5,16 +5,28 @@
 
 <form method="POST">
   <div class="form-group row">
+<<<<<<< HEAD
     <div class="col-md-3">
       <?= $this->Form->input("code", "Code", array("required" => true)) ?>
-    </div>
-  </div>
-  <div class="form-group row">
+=======
     <div class="col-md-5">
       <?= $this->Form->input("name", "Nom", array("required" => true)) ?>
     </div>
     <div class="col">
       <?= $this->Form->input("adresse", "Adresse") ?>
+>>>>>>> main
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+<<<<<<< HEAD
+      <?= $this->Form->input("name", "Nom", array("required" => true)) ?>
+    </div>
+    <div class="col">
+      <?= $this->Form->input("adresse", "Adresse") ?>
+=======
+      <?= $this->Form->input("mail", "Adresse email") ?>
+>>>>>>> main
     </div>
   </div>
   <div class="form-group row">

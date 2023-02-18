@@ -107,7 +107,11 @@ class ClientsController extends Controller
 
   function admin_list(){
     $this->loadModel('Client');
+<<<<<<< HEAD
     $d['clients'] = $this->Client->find(array("fields" => "id, code, name, mail, adresse, telephone, nb_bouteilles, lat, lon"));
+=======
+    $d['clients'] = $this->Client->find(array());
+>>>>>>> main
     $addresses = array();
 
     foreach ($d['clients'] as $key => $client) {
@@ -115,23 +119,35 @@ class ClientsController extends Controller
       if((empty($client->lat) || empty($client->lon)) && !empty($client->adresse)){
         $coordinates = getCoordinatesFromAddress($client->adresse);
         if($coordinates){
+<<<<<<< HEAD
           $this->Client->save((object) array(
             'id' => $client->id,
             'lat' => $coordinates['lat'],
             'lon' => $coordinates['lng']
           ));
+=======
+          $client->lat = $coordinates['lat'];
+          $client->lon = $coordinates['lng'];
+          $this->Client->save($client);
+>>>>>>> main
         }
       }
 
       if(empty($client->name)){
         $client->name = "Client sans nom";
       }
+<<<<<<< HEAD
 
       if(!isset($client->nb_bouteilles)){
         $this->Client->save((object)array(
           'id' => $client->id,
           'nb_bouteilles' => 0
         ));
+=======
+      if(empty($client->nb_bouteilles)){
+        $client->nb_bouteilles = 0;
+        $this->Client->save($client);
+>>>>>>> main
       }
 
       if($client->nb_bouteilles == 0){
