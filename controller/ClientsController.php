@@ -11,28 +11,28 @@ class ClientsController extends Controller
 
     $this->loadModel('Guest');
     $this->loadModel('Client');
-    $d['client'] = $this->Client->getClient($id, "id, name");
-
-    if(empty($d['client'])){
+    $d['client'] = $this->Client->getClient($id, "id, code, name");
+    $code = $d['client']->code;
+    if(empty($d['client']) || empty($code)){
       $this->e404('Cette page n\'existe pas');
     }
 
     $d['guest'] = $this->Guest->findFirst(
       array(
         'conditions' => array(
-          'client_id' => $id
+          'client_id' => $code
         )
       )
     );
     if(empty($d['guest'])){
       $guest = $this->Guest->save(array(
-        'client_id' => $id,
+        'client_id' => $code,
         'QRToken' => generateToken(Conf::$QRTokenLength)
       ));
       $d['guest'] = $this->Guest->findFirst(
         array(
           'conditions' => array(
-            'client_id' => $id
+            'client_id' => $code
           )
         )
       );
