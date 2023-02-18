@@ -1,3 +1,5 @@
+<h2 class="text-center">Consigne Mi Padre</h2>
+
 <?= $this->Session->flash(); ?>
 <img src="<?= Router::webroot("img/illustration.jpeg"); ?>" class="img-illustration" alt="illustration mipadre">
 <div class="text-center">

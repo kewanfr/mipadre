@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="<?= Router::webroot("vendor/css/bootstrap.min.css"); ?>">
+  <link rel="stylesheet" href="<?= Router::webroot("vendor/css/font-awesome.min.css"); ?>">
 
 
   <link rel="stylesheet" href="<?= Router::webroot("css/style.css") ?>">
@@ -52,10 +52,9 @@ $pageName = "home";
     </div>
   </nav>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="<?= Router::webroot("vendor/js/jquery-3.6.0.min.js"); ?>"></script>
+    <script src="<?= Router::webroot("vendor/js/popper.min.js"); ?>"></script>
+    <script src="<?= Router::webroot("vendor/js/bootstrap.min.js"); ?>"></script>
 
     <div class="container py-4 h-90">
       <?= $this->Session->flash(); ?>

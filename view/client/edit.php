@@ -8,7 +8,7 @@
   </div>
 </div>
 <div class="text-center">
-  <p>Vous avez <strong><?= $client->nb_bouteilles ?></strong> <?= $client->nb_bouteilles > 1 ? "bouteilles revenues" : "bouteille revenue" ?></o>
+  <p>Vous avez <strong><?= $client->nb_bouteilles ?></strong> bouteilles revenues</o>
 </div>
 
 <form action="<?= Router::url("client/edit") ?>" method="post">
