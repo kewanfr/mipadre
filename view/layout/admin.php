@@ -7,8 +7,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <link rel="stylesheet" href="<?= Router::webroot("vendor/css/bootstrap.min.css"); ?>">
-  <link rel="stylesheet" href="<?= Router::webroot("vendor/css/font-awesome.min.css"); ?>">
-
+  <link rel="stylesheet" href="<?= Router::webroot("vendor/fontawesome/css/all.min.css"); ?>">
 
   <link rel="stylesheet" href="<?= Router::webroot("css/style.css") ?>">
 

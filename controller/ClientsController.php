@@ -138,7 +138,7 @@ class ClientsController extends Controller
         $client->showMap = true;
         $client->badgeColor = "danger";
         $client->markerColor = "red";
-      }else if ($client->nb_bouteilles > 1) {
+      }else if ($client->nb_bouteilles >= 1) {
         $client->showMap = true;
         $client->badgeColor = "warning";
         $client->markerColor = "orange";
