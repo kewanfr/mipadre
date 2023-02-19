@@ -38,7 +38,6 @@
           <div class="nowrap">
             <a type="button" class="btn btn-info btn-sm" href="<?= Router::url("admin/clients/edit/" . $client->id) ?>">Editer</a>
             <a type="button" class="btn btn-warning btn-sm" href="<?= Router::url("admin/clients/generateqr/" . $client->id) ?>">QR Code</a>
-
           </div>
         </td>
       </tr>
@@ -49,57 +48,52 @@
 </table>
 <br>
 
-<?php 
-
-// find in $clients nb_bouteilles max
-$centerClient = $clients[0];
-foreach ($clients as $key => $client) {
-  if($client->nb_bouteilles > $centerClient->nb_bouteilles) $centerClient = $client;
-}
-
-?>
-
 <script>
   
   var map;
   var markers = []; 
   var infowindows = [];
+
+  let addresses = <?= json_encode($addresses) ?>;
+
+  let centerClient = addresses[0];
+  Object.values(addresses).forEach(function(client) {
+    if(client.nb_bouteilles > centerClient.nb_bouteilles) centerClient = client;
+  }); // On cherche le client avec le plus de bouteilles pour centrer la carte dessus
+
   function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: <?= $centerClient->lat ?>, lng: <?= $centerClient->lon ?>},
+      center: {lat: parseFloat(centerClient.lat), lng: parseFloat(centerClient.lon)},
       zoom: 8,
       mapTypeControl: false
     });
-    <?php
-    $counter = 0;
 
-    // Boucle sur les adresses pour afficher les marqueurs
-    foreach ($addresses as $key => $client) {
-      $text = $client->mapName." => ".$client->nb_bouteilles." bouteilles";
-      $id = $client->id;
+    let client = null;
 
-      $lat = $client->lat;
-      $lon = $client->lon;
+    Object.values(addresses).forEach(function(client) { // On ajoute les markers sur la carte
+      
+      let text = client.mapName + " => " + client.nb_bouteilles + " bouteilles";
+      let id = client.id.toString();
 
-      $icon = "http://maps.google.com/mapfiles/ms/icons/" . $client->markerColor . "-dot.png";
-      ?>
-      markers[<?= $client->id ?>] = new google.maps.Marker({
-        position: {lat: <?= $lat ?>, lng: <?= $lon ?>},
-        map: <?= $client->showMap == true ? "true" : "false" ?> == true ? map : null,
+      let lat = parseFloat(client.lat);
+      let lon = parseFloat(client.lon);
+      let icon = "http://maps.google.com/mapfiles/ms/icons/" + client.markerColor + "-dot.png";
+
+      markers[id] = new google.maps.Marker({
+        position: {lat: lat, lng: lon},
+        map: client.showMap == true ? map : null,
         icon: {
-          url: "<?= $icon ?>",
+          url: icon,
         },
       });
-      infowindows[<?= $client->id ?>] = new google.maps.InfoWindow({
-        content: '<?= $text ?>'
+      infowindows[id] = new google.maps.InfoWindow({
+        content: text
       });
-      markers[<?= $client->id ?>].addListener('click', function() {
-        infowindows[<?= $client->id ?>].open(map, markers[<?= $client->id ?>]);
+      markers[id].addListener('click', function() {
+        infowindows[id].open(map, markers[id]);
       });
-      
 
-    <?php $counter++;
-    }?>
+    });
 
   }
 </script>
@@ -107,20 +101,12 @@ foreach ($clients as $key => $client) {
 <script src='https://maps.googleapis.com/maps/api/js?key=<?= SecureConf::$googleMapsAPIKEY ?>&callback=initMap' async defer></script>
 <script>
 
-  $(document).ready(function() {
-    markers.forEach(function(marker, index) {
-      if ($('#customSwitch' + <?= json_encode(array_column($clients, 'id')) ?>[index]).is(':checked')) {
-        marker.setMap(map);
-      }else {
-        marker.setMap(null);
-      }
-    });
- 
-    $('#allMapSwitch').change(function() {
+  $(document).ready(function() { 
+    $('#allMapSwitch').change(function() { // Lorsque l'on change l'état du switch "Afficher tous les clients sur la carte"
 
-      $('#cavistes-table input[type="checkbox"]').prop('checked', this.checked);
+      $('#cavistes-table input[type="checkbox"]').prop('checked', this.checked); // On change l'état de tous les autres switchs
   
-      markers.forEach(function(marker, index) {
+      markers.forEach(function(marker, index) { // On affiche ou non les markers sur la carte
         if ($('#allMapSwitch').is(':checked')) {
           marker.setMap(map);
         }else {
@@ -129,12 +115,12 @@ foreach ($clients as $key => $client) {
       });
     });
 
-    $('#cavistes-table input[type="checkbox"]').change(function() {
-      var id = $(this).attr('id').replace('customSwitch', '');
-      if ($(this).attr('id') == "allMapSwitch") {
+    $('#cavistes-table input[type="checkbox"]').change(function() { // Lorsque l'on change l'état d'un switch "Afficher sur la carte"
+      var id = $(this).attr('id').replace('customSwitch', ''); 
+      if ($(this).attr('id') == "allMapSwitch") { // On vérifie que ce n'est pas le switch "Afficher tous les clients sur la carte"
         return;
       }
-      if(markers[id]){
+      if(markers[id]){ // On affiche ou non le marker sur la carte
         if (!this.checked) {
           markers[id].setMap(null);
         } else {

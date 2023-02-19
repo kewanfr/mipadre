@@ -127,25 +127,25 @@ class ClientsController extends Controller
         $client->name = "Client sans nom";
       }
 
-      if(!isset($client->nb_bouteilles)){
+      if(empty($client->nb_bouteilles)){
         $this->Client->save((object)array(
           'id' => $client->id,
           'nb_bouteilles' => 0
         ));
       }
 
-      if($client->nb_bouteilles == 0){
-        $client->showMap = false;
-        $client->badgeColor = "success";
-        $client->markerColor = "green";
-      }else if ($client->nb_bouteilles < 3) {
-        $client->showMap = true;
-        $client->badgeColor = "warning";
-        $client->markerColor = "orange";
-      }else{
+      if($client->nb_bouteilles >= 3){
         $client->showMap = true;
         $client->badgeColor = "danger";
         $client->markerColor = "red";
+      }else if ($client->nb_bouteilles > 1) {
+        $client->showMap = true;
+        $client->badgeColor = "warning";
+        $client->markerColor = "orange";
+      }else {
+        $client->showMap = false;
+        $client->badgeColor = "success";
+        $client->markerColor = "green";
       }
 
       $client->mapName = str_replace("'", "\'", $client->name);
