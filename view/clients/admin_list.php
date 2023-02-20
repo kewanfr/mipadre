@@ -139,7 +139,7 @@
     $('#allMapSwitch').change(function() { // Lorsque l'on change l'état du switch "Afficher tous les clients sur la carte"
 
       $('#cavistes-table input[type="checkbox"]').prop('checked', this.checked); // On change l'état de tous les autres switchs
-
+      
       markers.forEach(function(marker, index) { // On affiche ou non les markers sur la carte
         if ($('#allMapSwitch').is(':checked')) {
           marker.setMap(map);
