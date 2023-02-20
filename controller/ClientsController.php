@@ -100,6 +100,21 @@ class ClientsController extends Controller
 
   }
 
+  function admin_resetBouteilles($id){
+    $this->loadModel('Client');
+    $client = $this->Client->getClient($id, "id, name");
+    if(empty($client)){
+      $this->e404('Cette page n\'existe pas');
+    }
+
+    $this->Client->save((object) array(
+      'id' => $id,
+      'nb_bouteilles' => 0
+    ));
+    $this->Session->addFlashMessage("Nombre de bouteilles de ".$client->name." (ID:".$id.") remis à 0 avec succès !");
+    $this->redirect('admin/clients/');
+  }
+
   function admin_index(){
     $this->admin_list();
     $this->render("admin_list");
