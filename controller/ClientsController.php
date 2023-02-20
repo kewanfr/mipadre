@@ -100,6 +100,21 @@ class ClientsController extends Controller
 
   }
 
+  function admin_resetBouteilles($id){
+    $this->loadModel('Client');
+    $client = $this->Client->getClient($id, "id, name");
+    if(empty($client)){
+      $this->e404('Cette page n\'existe pas');
+    }
+
+    $this->Client->save((object) array(
+      'id' => $id,
+      'nb_bouteilles' => 0
+    ));
+    $this->Session->addFlashMessage("Nombre de bouteilles de ".$client->name." (ID:".$id.") remis à 0 avec succès !");
+    $this->redirect('admin/clients/');
+  }
+
   function admin_index(){
     $this->admin_list();
     $this->render("admin_list");
@@ -138,7 +153,7 @@ class ClientsController extends Controller
         $client->showMap = true;
         $client->badgeColor = "danger";
         $client->markerColor = "red";
-      }else if ($client->nb_bouteilles > 1) {
+      }else if ($client->nb_bouteilles >= 1) {
         $client->showMap = true;
         $client->badgeColor = "warning";
         $client->markerColor = "orange";

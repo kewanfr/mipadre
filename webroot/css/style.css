@@ -14,3 +14,9 @@ body {
 .nowrap{
   white-space: nowrap;
 }
+
+.flexnowrap{
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
