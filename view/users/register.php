@@ -5,18 +5,18 @@
     <div class="form-group row">
       <div class="col">
 
-        <?= $this->Form->input("login", "Nom d'utilisateur", array("invalidFeedback" => "", "required" => true)); ?>
+        <?= $this->Form->input("login", "Nom d'utilisateur", array("invalidFeedback" => "", "required" => "true")); ?>
       </div>
       <div class="col">
-        <?= $this->Form->input("email", "Adresse mail", array("invalidFeedback" => "", "required" => true)); ?>
+        <?= $this->Form->input("email", "Adresse mail", array("invalidFeedback" => "", "required" => "true")); ?>
       </div>
     </div>
     <div class="form-group">
-      <?= $this->Form->input("password", "Mot de passe", array("type" => "passwordWithBtn", "invalidFeedback" => "", "required" => true)); 
+      <?= $this->Form->input("password", "Mot de passe", array("type" => "passwordWithBtn", "invalidFeedback" => "", "required" => "true")); 
        ?>
     </div>
     <div class="form-group">
-      <?= $this->Form->input("passwordConfirm", "Confirmation", array("type" => "passwordWithBtn","invalidFeedback" => "", "required" => true)); ?>
+      <?= $this->Form->input("passwordConfirm", "Confirmation", array("type" => "passwordWithBtn","invalidFeedback" => "", "required" => "true")); ?>
     </div>
     <button type="submit" class="btn btn-primary">S'inscrire</button>
   </form>

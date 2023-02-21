@@ -35,29 +35,35 @@ $pageName = "home";
       </ul>
       <ul class="navbar-nav mr-right">
         <?php if ($this->Session->isLogged()) : ?>
-          <li class="nav-item">
-            <a class="nav-link">Connecté en tant que <?= $this->Session->user("login") ?></a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <?= $this->Session->user("login") ?>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="<?= Router::url("users/profile") ?>">Profil</a>
+              <a class="dropdown-item" href="<?= Router::url("users/logout") ?>">Déconnexion</a>
+            </div>
           </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="<?= Router::url("users/logout") ?>">Déconnexion</a>
-          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="<?= Router::url("admin/users/settings") ?>">Paramètres</a>
+          </li> -->
         <?php else : ?>
           <li class="nav-item <?= $pageName == 'login' ? 'active' : '' ?>">
             <a class="nav-link" href="<?= Router::url("users/login") ?>">Connexion</a>
           </li>
         <?php endif; ?>
+
       </ul>
     </div>
   </nav>
 
-    <script src="<?= Router::webroot("vendor/js/jquery-3.6.0.min.js"); ?>"></script>
-    <script src="<?= Router::webroot("vendor/js/popper.min.js"); ?>"></script>
-    <script src="<?= Router::webroot("vendor/js/bootstrap.min.js"); ?>"></script>
+  <script src="<?= Router::webroot("vendor/js/jquery-3.6.0.min.js"); ?>"></script>
+  <script src="<?= Router::webroot("vendor/js/popper.min.js"); ?>"></script>
+  <script src="<?= Router::webroot("vendor/js/bootstrap.min.js"); ?>"></script>
 
-    <div class="container py-4 h-90">
-      <?php echo $content_for_layout; ?>
-    </div>
+  <div class="container py-4 h-90">
+    <?php echo $content_for_layout; ?>
+  </div>
   <?php require "elements/footer.php" ?>
 </body>
 
