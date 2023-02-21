@@ -2,8 +2,9 @@
 <script type="text/javascript" src="<?= Router::webroot("vendor/js/jquery.dataTables.min.js"); ?>"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 <h2 class="text-center">Liste des Clients</h2>
-<a type="button" class="btn btn-info mb-4" href="<?= Router::url("admin/clients/edit/") ?>">Ajouter un client</a>
 
+<?= $this->Session->flash(); ?>
+<a type="button" class="btn btn-info mb-4" href="<?= Router::url("admin/clients/edit/") ?>">Ajouter un client</a>
 <div id='map' style='width:100%;height:60vh;margin-bottom: 20px;'></div>
 
 <div class="modal fade" id="resetModal" tabindex="1" role="dialog" aria-labelledby="resetModalLabel" aria-hidden="true">

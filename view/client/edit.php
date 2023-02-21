@@ -1,6 +1,6 @@
 <h2 class="text-center">Modification</h2>
-<?= $this->Session->flash(); ?>
 
+<?= $this->Session->flash(); ?>
 <img src="<?= Router::webroot("img/illustration.jpeg"); ?>" class="img-illustration" alt="illustration mipadre">
 <div class="text-center">
   <div class="clientName">

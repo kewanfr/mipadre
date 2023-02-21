@@ -56,7 +56,6 @@ $pageName = "home";
     <script src="<?= Router::webroot("vendor/js/bootstrap.min.js"); ?>"></script>
 
     <div class="container py-4 h-90">
-      <?= $this->Session->flash(); ?>
       <?php echo $content_for_layout; ?>
     </div>
   <?php require "elements/footer.php" ?>

@@ -1,6 +1,6 @@
 <h2 class="text-left"><?= $title ?></h2>
-<?= $this->Session->flash(); ?>
 
+<?= $this->Session->flash(); ?>
 <a href="<?= Router::url('admin/clients') ?>" class="btn btn-info btn-sm  mb-3">Retour</a>
 
 <form method="POST">

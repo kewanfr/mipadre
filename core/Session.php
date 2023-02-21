@@ -6,34 +6,44 @@ class Session{
     }  
   }
 
-  public function setFlash($message, $type = 'success', $retain = null){
+  public function setFlash($message, $type = 'success', $retain = null, $list = null){
     if(!isset($_SESSION['flash'])){
       $_SESSION['flash'] = array();
     }
     $_SESSION['flash'][] = array(
       'message' => $message,
       'type' => $type,
-      'retain' => $retain
+      'retain' => $retain,
+      'list' => $list
     );
   }
 
-  public function addFlashMessage($message, $type = 'success', $retain = null){
+  public function addFlashMessage($message, $type = 'success', $retain = null, $list = null){
     if(!isset($_SESSION['flash'])){
       $_SESSION['flash'] = array();
     }
     $_SESSION['flash'][] = array(
       'message' => $message,
       'type' => $type,
-      'retain' => $retain
+      'retain' => $retain,
+      'list' => $list
     );
   }
 
   public function flash(){
     if(isset($_SESSION['flash']) and is_array($_SESSION['flash']) and !empty($_SESSION['flash']) ){
+      // die(debug($_SESSION['flash']));
       $html = '';
       foreach($_SESSION['flash'] as $key => $flash){
         $html .= '<div class="alert alert-'.$flash['type'].'">';
         $html .= $flash['message'].'<br>';
+        if($flash['list'] and is_array($flash['list'])){
+          $html .= '<ul>';
+          foreach($flash['list'] as $k => $v){
+            $html .= '<li>'.$v.'</li>';
+          }
+          $html .= '</ul>';
+        }
         $html .= '</div>';
         if(!$flash['retain']){
           unset($_SESSION['flash'][$key]);

@@ -7,7 +7,8 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <link rel="stylesheet" href="<?= Router::webroot("vendor/css/bootstrap.min.css"); ?>">
-  <link rel="stylesheet" href="<?= Router::webroot("vendor/css/font-awesome.min.css"); ?>">
+  <!-- <link rel="stylesheet" href="<= Router::webroot("vendor/css/font-awesome.min.css"); ?>"> -->
+  <link rel="stylesheet" href="<?= Router::webroot("vendor/fontawesome/css/all.min.css"); ?>">
 
   <link rel="stylesheet" href="<?= Router::webroot("css/style.css"); ?>">
 
@@ -52,7 +53,6 @@
 
   <script src="<?= Router::webroot("vendor/js/jquery-3.6.0.min.js"); ?>"></script>
   <div class="container py-4 h-90">
-    <?php echo $this->Session->flash(); ?>
     <?php echo $content_for_layout; ?>
   </div>
   <script src="<?= Router::webroot("vendor/js/popper.min.js"); ?>"></script>
