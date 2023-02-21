@@ -67,6 +67,8 @@ class Form{
     if($label == "hidden"){
       return '<input type="hidden" name="'.$name.'" id="'.$name.'" value="'.$value.'">';
     }
+    $invalidFeedback = isset($options["invalidFeedback"]) ? '<div class="invalid-feedback" id="invalid-'.$name.'">'.$options["invalidFeedback"].'</div>' : '';
+    unset($options["invalidFeedback"]);
     // $html = '<div class="'.$divClass.'">';
     $html = '';
     $html .= '<label for="'.$name.'">'.$label.'</label>';
@@ -76,7 +78,6 @@ class Form{
         $attr .= $k.'="'.$v.'"';
       }
     }
-    $invalidFeedback = isset($options["invalidFeedback"]) ? '<div class="invalid-feedback" id="invalid-'.$name.'">'.$options["invalidFeedback"].'</div>' : '';
     if($type == 'textarea'){
       $html .= '<textarea name="'.$name.'" id="'.$name.'" class="form-control"'.$attr.'>'.$value.'</textarea>';
       $html .= $invalidFeedback;
