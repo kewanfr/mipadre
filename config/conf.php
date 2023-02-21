@@ -10,6 +10,8 @@ class Conf
     static $dbName = 'dev'; // Nom de la base de données à utiliser
     
     static $QRTokenLength = 3; // Longueur du token pour les QRCode (à changer)
+    static $CookieTokenLength = 20; // Longueur du token pour les cookies (à changer)
+    static $CookieDuration = 3600*24*61; // Durée de vie du token pour les cookies en secondes (2 mois)
 
     static $majorVersion = 1; // Version majeure du site
     static $minorVersion = 5; // Version mineure du site

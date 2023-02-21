@@ -77,11 +77,46 @@ class Session{
     }
   }
 
+  public function writeCookie($key, $value, $time = 3600){
+    setcookie($key, $value, time() + $time, '/', "", false, true);
+  }
+
+  public function readCookie($key){
+    return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
+  }
+
+  public function deleteCookie($key){
+    setcookie($key, '', time() - 3600, '/', null, false, true);
+  }
+
   public function isLogged(){
-    return isset($_SESSION['User']->id);
+    $id = isset($_SESSION['User']->id);
+
+    $file = ROOT.DS.'model'.DS.'User.php';
+    require_once($file);
+    $this->User = new User();
+
+    if($id) return $id;
+
+    if(isset($_COOKIE['uid']) && isset($_COOKIE['tk'])){
+      $id = $_COOKIE['uid'];
+      $token = $_COOKIE['tk'];
+      $user = $this->User->findFirst(array(
+        'conditions' => array(
+          'id' => $id,
+          'cookie_token' => $token,
+        )
+      ));
+      if($user){
+        $this->write('User', $user);
+        return $user->id;
+      }
+    }
+    return false;
   }
 
   public function isLoggedAs($type = "user"){
+    $id = $this->isLogged();
     switch ($type) {
       case 'admin':
         return isset($_SESSION['User']->id) && $_SESSION['User']->role == 'admin';
