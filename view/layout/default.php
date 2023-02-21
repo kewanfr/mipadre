@@ -39,9 +39,18 @@
           <li class="nav-item  <?= $pageName == 'clients' ? 'active' : '' ?>">
             <a class="nav-link" href="<?= Router::url("admin") ?>">Administration</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?= Router::url("users/logout") ?>">Déconnexion</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <?= $this->Session->user("login"); ?>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="<?= Router::url("users/profile") ?>">Profil</a>
+              <a class="dropdown-item" href="<?= Router::url("users/logout") ?>">Déconnexion</a>
+            </div>
           </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="<?= Router::url("admin/users/settings") ?>">Paramètres</a>
+          </li> -->
         <?php else : ?>
           <li class="nav-item <?= $pageName == 'login' ? 'active' : '' ?>">
             <a class="nav-link" href="<?= Router::url("users/login") ?>">Connexion</a>
