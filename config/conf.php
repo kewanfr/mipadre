@@ -15,9 +15,9 @@ class Conf
 
     static $majorVersion = 1; // Version majeure du site
     static $minorVersion = 5; // Version mineure du site
-    static $patchVersion = 0; // Version de patch du site
+    static $patchVersion = 3; // Version de patch du site
     static $versionName = ""; // Nom de la version
-    static $versionDate = "21 Fev"; // Date de la version 
+    static $versionDate = "8 May"; // Date de la version 
     static $version;
 
     static $copyright = "&copy;2023 Mi Padre"; // Texte du copyRight
@@ -48,5 +48,7 @@ Router::connect('admin', 'admin/clients/index');
  */
 Router::connect('qr/:id/:token', 'client/qrlogin/id:([a-zA-Z0-9\-]+)/token:([a-zA-Z0-9\-]+)');
 // Router::connect('qr/:id/:token', 'client/qrlogin/id:(CLT[0-9]+)/token:([a-zA-Z0-9\-]+)');
+
+
 
 ?>
