@@ -251,4 +251,60 @@ class UsersController extends Controller
     ));
     $this->set('users', $users);
   }
+
+  function admin_edit($id = null)
+  {
+    $this->loadModel('User');
+
+    if (isset($id)) {
+      $d['mode'] = "edit";
+      $d['id'] = $id;
+    } else {
+      $d['mode'] = "add";
+      $d['title'] = "Ajouter un utilisateur";
+    }
+
+    if ($this->request->data) {
+
+      $d['title'] = "Modifier l'Utilisateur " . $this->request->data->firstname.' ('.$this->request->data->login.')';
+      if($this->request->data->password){
+        $this->request->data->password = password_hash($this->request->data->password, PASSWORD_DEFAULT);
+      }
+      if ($d['mode'] == "edit") {
+        $this->request->data->id = $id;
+        $this->User->save($this->request->data);
+        $this->Session->setFlash("Informations modifiées avec succès !");
+      } else {
+        $newID = $this->User->save($this->request->data);
+        $this->request->data->id = $newID;
+        $this->Session->setFlash("Utilisateur créé avec succès !", "success", 2);
+        $this->redirect('admin/users/edit/' . $newID);
+      }
+      $d['mode'] = "edit";
+    } else if ($d['mode'] == "edit") {
+      $this->request->data = $this->User->getUser($id);
+      if (empty($this->request->data)) {
+        $this->e404('Cet utilisateur n\'existe pas');
+      }
+      $d['title'] = "Modifier l'Utilisateur " . $this->request->data->firstname.' ('.$this->request->data->login.')';
+    }
+    unset($this->request->data->password);
+
+    $this->set($d);
+  }
+
+  function admin_delete($id)
+  {
+
+    $this->loadModel('User');
+    $user = $this->User->getUser($id, "id, firstname, login");
+    if (empty($user)) {
+      $this->e404('Cette page n\'existe pas');
+    }
+
+    $this->User->delete($id);
+    $this->Session->addFlashMessage("Utilisateur ".$user->firstname . " (" . $user->login . ") Supprimé avec succès !");
+    $this->redirect('admin/users/list');
+  }
+
 }

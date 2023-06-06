@@ -174,7 +174,8 @@
       language: {
         "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/French.json"
       },
-      pageLength: 50,
+      // pageLength: 50,
+      bPaginate: false,
       columns: [
         {
           name: "code",
