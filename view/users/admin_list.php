@@ -4,7 +4,7 @@
 <h2 class="text-center">Liste des Utilisateurs</h2>
 
 <?= $this->Session->flash(); ?>
-<a type="button" class="btn btn-info mb-4" href="<?= Router::url("admin/users/edit/") ?>">Ajouter un utilisateur</a>
+<a type="button" class="btn btn-info mb-4" href="<?= Router::url("admin/users/edit/") ?>">Créer un utilisateur</a>
   
 <table id="users-table" class="table table-striped table-bordered table-hover display">
   <thead>
@@ -13,7 +13,7 @@
       <th scope="col" name="firstname">Prénom</th>
       <th scope="col" name="login">Nom d'utilisateur</th>
       <th scope="col" name="email">Adresse E-mail</th>
-      <th scope="col" name="role">Role</th>
+      <th scope="col" name="role">Statut</th>
       <th scope="col" name="actions"></th>
     </tr>
   </thead>
@@ -24,12 +24,17 @@
         <td class="bold"><?= $user->firstname ?></td>
         <td class="bold"><?= $user->login ?></td>
         <td class="bold"><?= $user->email ?></td>
-        <td class="bold"><?= $user->role ?></td>
+        <!-- Si pas admin, compte désactivé avec pastille -->
+        <td class="bold"><?= $user->role != "user" ? $user->role : "<span class='badge badge-danger'>Désactivé</span>" ?></td>
         
         <td>
           <div class="nowrap">
             <a type="button" class="btn btn-info btn-sm" href="<?= Router::url("admin/users/edit/" . $user->id) ?>">Editer</a>
+            <?php if ($user->role == "user") { ?>
+              <a type="button" class="btn btn-success btn-sm" href="<?= Router::url("admin/users/activate/" . $user->id) ?>">Activer</a>
+            <?php } ?>
           </div>
+
         </td>
       </tr>
 

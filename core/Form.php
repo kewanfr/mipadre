@@ -19,16 +19,17 @@ class Form{
         },
         "message" => "Le nom d'utilisateur est vide.",
       ),
-      "email" => array(
-        "rule" => function ($data) {
-          $emailRegex = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/';
-          return !empty($data->email) && preg_match($emailRegex, $data->email);
-        },
-        "message" => "L'adresse email n'est pas valide.",
-      ),
+      // "email" => array(
+      //   "rule" => function ($data) {
+      //     $emailRegex = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/';
+      //     return !empty($data->email) && preg_match($emailRegex, $data->email);
+      //   },
+      //   "message" => "L'adresse email n'est pas valide.",
+      // ),
       "password" => array(
         "rule" => function ($data) {
-          $passwordRegex = '/^^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,30}$/';
+          $passwordRegex = '/^^(?=.*\d)(?=.*[A-Z]).{5,30}$/';
+          // $passwordRegex = '/^^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,30}$/';
           return !empty($data->password) && preg_match($passwordRegex, $data->password);
         },
         "message" => "Le mot de passe doit comporter au moins 5 caractères, une majuscule et un chiffre.",

@@ -10,6 +10,10 @@
     <div class="form-group">
       <?= $this->Form->input("password", "Mot de passe", array("type" => "passwordWithBtn", "required" => true)); ?>
     </div>
+    <div class="form-group">
+      Pas encore de compte ? <a href="<?= Router::url('users/register'); ?>">S'inscrire</a> <br>
+      Mot de passe oublié ? <a href="<?= Router::url('users/forgotpassword'); ?>">Réinitialiser</a>
+    </div>
     <button type="submit" class="btn btn-primary">Se connecter</button>
   </form>
 </div>

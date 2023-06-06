@@ -17,8 +17,8 @@
       <?= $this->Form->input("email", "Adresse email", array("type" => "email")) ?>
     </div>
     <div class="col-md-5">
-    <?= $this->Form->input("role", "Role", array("type" => "select", "defaultVal" => "user", "options" => array(
-      "user" => "Utilisateur",
+    <?= $this->Form->input("role", "Statut", array("type" => "select", "defaultVal" => "user", "options" => array(
+      "user" => "Désactivé",
       "admin" => "Administrateur"
     ))) ?>
     </div>

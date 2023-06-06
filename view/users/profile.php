@@ -11,6 +11,7 @@
       </div>
       <div class="list-group list-group-flush" role="tablist">
         <a class="list-group-item list-group-item-action" data-toggle="list" href="#informations" role="tab">Mes informations</a>
+        <a class="list-group-item list-group-item-action" data-toggle="list" href="#firstname" role="tab">Prénom</a>
         <a class="list-group-item list-group-item-action" data-toggle="list" href="#login" role="tab">Nom d'utilisateur</a>
         <a class="list-group-item list-group-item-action" data-toggle="list" href="#email" role="tab">Adresse email</a>
         <a class="list-group-item list-group-item-action" data-toggle="list" href="#password" role="tab">Mot de passe</a>
@@ -22,6 +23,11 @@
   <div class="col-lg-9">
     <div class="tab-content">
 
+      <?php if ($user->role != "admin") : ?>
+          <div class="alert alert-warning" role="alert">
+            Votre compte n'est pas encore activé. Veuillez attendre qu'un administrateur l'active.
+          </div>
+      <?php endif; ?>
       <div class="tab-pane" id="informations" role="tabpanel">
         <div class="card">
           <div class="card-header">
@@ -32,6 +38,23 @@
             <p>Nom d'utilisateur : <strong><?= $user->login; ?></strong></p>
             <p>Email : <strong><?= $user->email; ?></strong></p>
             <p>Permission : <strong><?= $user->role; ?></strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="firstname" role="tabpanel">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Prénom</h5>
+          </div>
+          <div class="card-body">
+            <form method="post" action="<?= Router::url("users/update/firstname") ?>">
+              <div class="form-group">
+                <label for="firstname">Prénom :</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" value="<?= $user->firstname ?>">
+              </div>
+              <button type="submit" class="btn btn-primary">Modifier</button>
+            </form>
           </div>
         </div>
       </div>
