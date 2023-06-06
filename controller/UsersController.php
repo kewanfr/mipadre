@@ -247,10 +247,7 @@ class UsersController extends Controller
   function admin_list(){
     $this->loadModel('User');
     $users = $this->User->find(array(
-      'fields' => 'id, login, email, role',
-      'conditions' => array(
-        'role' => 'user'
-      )
+      'fields' => 'id, firstname, login, email, role'
     ));
     $this->set('users', $users);
   }
