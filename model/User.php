@@ -3,7 +3,7 @@ class User extends Model{
     
     //public $table = 'posts';
     
-  public function getUser($id, $fields = ['*'])
+  public function getUser($id, $fields)
   {
     return $this->findFirst(array(
       'fields' => $fields,
@@ -18,9 +18,5 @@ class User extends Model{
     return $this->find(array(
       'fields' => $fields
     ));
-  }
-
-  public function getLastUser(){
-    return $this->findLast(array());
   }
 }

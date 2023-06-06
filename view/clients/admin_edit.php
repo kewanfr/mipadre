@@ -30,7 +30,7 @@
     <div class="col-md-2">
       <?= $this->Form->input("nb_bouteilles", "Nombre de bouteilles", array("type" => "number", "defaultVal" => 0)) ?>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <?= $this->Form->input("user_id", "Utilisateur", array("type" => "select", "defaultVal" => 0, "options" => $users)) ?>
     </div>
   </div>

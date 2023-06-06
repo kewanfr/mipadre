@@ -91,18 +91,6 @@ class Controller
   }
 
   /**
-   * Permet de gérer les erreurs 403
-   */
-  function e403($message)
-  {
-    header("HTTP/1.0 403 Forbidden");
-    $this->set('message', $message);
-
-    $this->render('/errors/403');
-    die();
-  }
-
-  /**
    * Permet d'appeler un controleur depuis une vue
    */
   function request($controller, $action)
