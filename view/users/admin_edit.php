@@ -9,8 +9,11 @@
       <?= $this->Form->input("firstname", "Prénom", array("required" => false)) ?>
     </div>
     <div class="col">
-      <?= $this->Form->input("login", "Nom d'utilisateur", array("required" => true)) ?>
+      <?= $this->Form->input("lastname", "Nom", array()) ?>
     </div>
+  </div>
+  <div class="form-group">
+    <?= $this->Form->input("login", "Nom d'utilisateur", array("required" => true)) ?>
   </div>
   <div class="form-group row">
     <div class="col-md-5">
@@ -25,7 +28,7 @@
   </div>
   <div class="form-group row">
     <div class="col-md-5">
-      <?= $this->Form->input("password", "Nouveau Mot de passe", array("type" => "password")) ?>
+      <?= $this->Form->input("password", "Nouveau Mot de passe", array("type" => "passwordWithBtn")) ?>
     </div>
     </div>
   <button type="submit" class="btn btn-primary mt-4 mb-3"><?= $mode == "edit" ? "Enregistrer les modifications" : "Créer l'utilisateur" ?></button>

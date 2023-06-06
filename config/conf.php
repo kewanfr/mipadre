@@ -14,8 +14,8 @@ class Conf
     static $CookieDuration = 3600*24*61; // Durée de vie du token pour les cookies en secondes (2 mois)
 
     static $majorVersion = 1; // Version majeure du site
-    static $minorVersion = 5; // Version mineure du site
-    static $patchVersion = 8; // Version de patch du site
+    static $minorVersion = 6; // Version mineure du site
+    static $patchVersion = 0; // Version de patch du site
     static $versionName = ""; // Nom de la version
     static $versionDate = "6 June"; // Date de la version 
     static $version;

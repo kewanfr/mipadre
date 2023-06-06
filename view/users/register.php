@@ -8,8 +8,11 @@
         <?= $this->Form->input("firstname", "Prénom", array("invalidFeedback" => "", "required" => "true")); ?>
       </div>
       <div class="col">
-        <?= $this->Form->input("login", "Nom d'utilisateur", array("invalidFeedback" => "", "required" => "true")); ?>
+        <?= $this->Form->input("lastname", "Nom", array("invalidFeedback" => "", "required" => "true")); ?>
       </div>
+    </div>
+    <div class="form-group">
+      <?= $this->Form->input("login", "Pseudo", array("invalidFeedback" => "", "required" => "true")); ?>
     </div>
     <div class="form-group row">
       <div class="col">

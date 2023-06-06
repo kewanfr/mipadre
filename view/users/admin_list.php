@@ -11,7 +11,8 @@
     <tr>
       <th scope="col" name="id">ID</th>
       <th scope="col" name="firstname">Prénom</th>
-      <th scope="col" name="login">Nom d'utilisateur</th>
+      <th scope="col" name="lastname">Nom</th>
+      <th scope="col" name="login">Pseudo</th>
       <th scope="col" name="email">Adresse E-mail</th>
       <th scope="col" name="role">Statut</th>
       <th scope="col" name="actions"></th>
@@ -22,6 +23,7 @@
       <tr>
         <td class="bold"><?= $user->id ?></td>
         <td class="bold"><?= $user->firstname ?></td>
+        <td class="bold"><?= $user->lastname ?></td>
         <td class="bold"><?= $user->login ?></td>
         <td class="bold"><?= $user->email ?></td>
         <!-- Si pas admin, compte désactivé avec pastille -->
@@ -59,6 +61,10 @@
         },
         {
           name: "firstname",
+          orderable: true,
+        },
+        {
+          name: "lastname",
           orderable: true,
         },
         {

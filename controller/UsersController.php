@@ -73,6 +73,7 @@ class UsersController extends Controller
           $role = 'user';
           $newUser = (object) array(
             'firstname' => $data->firstname,
+            'lastname' => $data->lastname ? $data->lastname : null,
             'login' => $data->login,
             'email' => $data->email,
             'password' => $password,
@@ -96,6 +97,55 @@ class UsersController extends Controller
         $this->redirect('admin');
       } else {
         $this->redirect('users/profile');
+      }
+    }
+  }
+
+  function forgotpassword(){
+    if ($this->request->data) {
+      $data = $this->request->data;
+      $this->loadModel('User');
+      $user = $this->User->findFirst(array(
+        'conditionsor' => array(
+          'login' => $data->login,
+          'email' => $data->login,
+        )
+      ));
+      if ($user) {
+        $token = generateToken(Conf::$CookieTokenLength);
+        $this->User->save((object)
+        array(
+          'id' => $user->id,
+          'reset_token' => $token
+        ));
+
+        $to = $user->email;
+        $subject = "Mi Padre | Réinitialisation de mot de passe";
+        // $message = "Bonjour,\n\nVous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe :\n\nhttp://example.com/reset_password.php?token=xxxxxxxx\n\nCe lien sera valide pendant 24 heures. Si vous n'avez pas demandé cette réinitialisation, vous pouvez ignorer ce message.\n\nCordialement,\nL'équipe de Example.com";
+        $message = <<<TEXT
+Bonjour,
+Vous avez demandé la réinitialisation de votre mot de passe sur le site <?= Router::url('/') ?>. Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe : 
+<a href='http://example.com/reset_password.php?token=xxxxxxxx' style='display:inline-block;padding:12px 24px;background-color:#007bff;color:#fff;text-decoration:none;border-radius:4px;'>Réinitialiser mon mot de passe</a>
+Ce lien sera valide pendant 24 heures. Si vous n'avez pas demandé cette réinitialisation, vous pouvez ignorer ce message.
+<?= "test" ?>
+TEXT;
+        // Bonjour,\n\nVous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour réinitialiser votre mot de passe :\n\n<a href='http://example.com/reset_password.php?token=xxxxxxxx' style='display:inline-block;padding:12px 24px;background-color:#007bff;color:#fff;text-decoration:none;border-radius:4px;'>Réinitialiser mon mot de passe</a>\n\nCe lien sera valide pendant 24 heures. Si vous n'avez pas demandé cette réinitialisation, vous pouvez ignorer ce message.\n\nCordialement,\nL'équipe de Example.com";
+
+        $headers = "From: no-reply@mipadre.fr\r\n";
+        $headers .= "Reply-To: no-reply@mipadre.fr\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+
+
+        $result = mail($to, $subject, $message, $headers);
+        debug($to);
+        debug($message);
+        debug($result);
+
+        // $this->Session->setFlash('Un email vous a été envoyé pour réinitialiser votre mot de passe', 'success');
+        // $this->redirect('users/login');
+      } else {
+        $this->Session->setFlash('Identifiant ou adresse email incorrect', 'danger');
       }
     }
   }
@@ -162,6 +212,20 @@ class UsersController extends Controller
 
       switch ($type) {
 
+        case 'lastname':
+          $newLastname = $this->request->data->lastname;
+          if(empty($newLastname) || $newLastname == $oldUser->lastname) {
+            $this->Session->setFlash('Prénom inchangé', 'warning');
+            return $this->redirect('users/profile#lastname');
+          }
+          $newUser = (object) array(
+            'id' => $userId,
+            'lastname' => $this->request->data->lastname,
+          );
+      
+          $this->User->save($newUser);
+          $this->Session->setFlash("Prénom mis à jour", 'success');
+          break;
         case 'firstname':
           $newFirstname = $this->request->data->firstname;
           if(empty($newFirstname) || $newFirstname == $oldUser->firstname) {
@@ -264,14 +328,10 @@ class UsersController extends Controller
     $this->redirect('users/profile#'.$type);
   }
 
-  function forgotpassword(){
-
-  }
-
   function admin_list(){
     $this->loadModel('User');
     $users = $this->User->find(array(
-      'fields' => 'id, firstname, login, email, role'
+      'fields' => 'id, firstname, lastname, login, email, role'
     ));
     $this->set('users', $users);
   }

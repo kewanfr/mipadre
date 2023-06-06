@@ -5,7 +5,7 @@
   <?= $this->Session->flash(); ?>
   <form action="<?= Router::url("users/login"); ?>" method="post">
     <div class="form-group">
-      <?= $this->Form->input("login", "Identifiant", array("required" => true)); ?>
+      <?= $this->Form->input("login", "Identifiant (email ou nom d'utilisateur)", array("required" => true)); ?>
     </div>
     <div class="form-group">
       <?= $this->Form->input("password", "Mot de passe", array("type" => "passwordWithBtn", "required" => true)); ?>
