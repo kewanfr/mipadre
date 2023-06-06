@@ -48,9 +48,9 @@ class UsersController extends Controller
 
   function register($token = null)
   {
-    if (!isset($token) || $token !== SecureConf::$RegisterToken) {
-      $this->e401("Accès non autorisé");
-    }
+    // if (!isset($token) || $token !== SecureConf::$RegisterToken) {
+    //   $this->e401("Accès non autorisé");
+    // }
     if ($this->request->data) {
       $errors = $this->Form->validation($this->request->data);
       if (!empty($errors)) {
@@ -69,12 +69,15 @@ class UsersController extends Controller
           $this->Session->setFlash('Identifiant ou adresse email déjà utilisé', 'danger');
         } else {
           $password = password_hash($data->password, PASSWORD_DEFAULT);
-          $role = 'admin';
+          $token = generateToken(Conf::$CookieTokenLength);
+          $role = 'user';
           $newUser = (object) array(
+            'firstname' => $data->firstname,
             'login' => $data->login,
             'email' => $data->email,
             'password' => $password,
             'role' => $role,
+            'cookie_token' => $token
           );
           $userId = $this->User->save($newUser);
           $newUser->id = $userId;
@@ -84,15 +87,15 @@ class UsersController extends Controller
           $this->Session->writeCookie('uid', $userId, Conf::$CookieDuration);
 
           $this->Session->write('User', $newUser);
-          $this->Session->setFlash('Inscription Réussie !', 'success', 1);
-          $this->redirect('admin');
+          $this->Session->setFlash('Inscription Réussie !', 'success');
+          $this->redirect('users/new_account');
         }
       }
     } else if ($this->Session->isLogged()) {
       if ($this->Session->user('role') == 'admin') {
         $this->redirect('admin');
       } else {
-        $this->redirect('');
+        $this->redirect('users/profile');
       }
     }
   }
@@ -102,7 +105,7 @@ class UsersController extends Controller
     $this->Session->writeCookie('tk', '', -1);
     $this->Session->writeCookie('uid', '', -1);
     $this->Session->write('User', null);
-    $this->Session->setFlash('Déconnexion Réussie !', 'success', 1);
+    $this->Session->setFlash('Déconnexion Réussie !', 'success');
     $this->redirect('users/login');
   }
 
@@ -117,6 +120,7 @@ class UsersController extends Controller
         'id' => $this->Session->user('id')
       )
     ));
+    $this->Session->updateSessionUser($user);
     if ($this->request->data) {
       $data = $this->request->data;
       $errors = $this->Form->validation($data);
@@ -157,6 +161,22 @@ class UsersController extends Controller
     if ($this->request->data) {
 
       switch ($type) {
+
+        case 'firstname':
+          $newFirstname = $this->request->data->firstname;
+          if(empty($newFirstname) || $newFirstname == $oldUser->firstname) {
+            $this->Session->setFlash('Prénom inchangé', 'warning');
+            return $this->redirect('users/profile#firstname');
+          }
+          $newUser = (object) array(
+            'id' => $userId,
+            'firstname' => $this->request->data->firstname,
+          );
+      
+          $this->User->save($newUser);
+          $this->Session->setFlash("Prénom mis à jour", 'success');
+          break;
+
         case 'login':
           $newLogin = $this->request->data->login;
           if(empty($newLogin) || $newLogin == $oldUser->login) {
@@ -244,6 +264,10 @@ class UsersController extends Controller
     $this->redirect('users/profile#'.$type);
   }
 
+  function forgotpassword(){
+
+  }
+
   function admin_list(){
     $this->loadModel('User');
     $users = $this->User->find(array(
@@ -261,7 +285,7 @@ class UsersController extends Controller
       $d['id'] = $id;
     } else {
       $d['mode'] = "add";
-      $d['title'] = "Ajouter un utilisateur";
+      $d['title'] = "Créer un utilisateur";
     }
 
     if ($this->request->data) {
@@ -293,6 +317,26 @@ class UsersController extends Controller
     $this->set($d);
   }
 
+  
+
+  public function admin_activate($id){
+    $this->loadModel('User');
+    $user = $this->User->findFirst(array(
+      'conditions' => array(
+        'id' => $id
+      )
+    ));
+    if(!$user){
+      $this->Session->setFlash('Utilisateur introuvable', 'danger');
+      $this->redirect('admin/users/list');
+    }
+    $user->role = "admin";
+    $this->User->save($user);
+    $this->Session->setFlash('Utilisateur activé', 'success');
+    $this->redirect('admin/users/list');
+  }
+
+
   function admin_delete($id)
   {
 
@@ -305,6 +349,14 @@ class UsersController extends Controller
     $this->User->delete($id);
     $this->Session->addFlashMessage("Utilisateur ".$user->firstname . " (" . $user->login . ") Supprimé avec succès !");
     $this->redirect('admin/users/list');
+  }
+
+  function new_account(){
+    if($this->Session->isLogged()){
+      if($this->Session->isLoggedAs("admin")) $this->redirect('admin/');
+      else $this->redirect('users/profile');
+    }
+
   }
 
 }

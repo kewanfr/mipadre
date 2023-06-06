@@ -15,7 +15,7 @@ class Conf
 
     static $majorVersion = 1; // Version majeure du site
     static $minorVersion = 5; // Version mineure du site
-    static $patchVersion = 6; // Version de patch du site
+    static $patchVersion = 8; // Version de patch du site
     static $versionName = ""; // Nom de la version
     static $versionDate = "6 June"; // Date de la version 
     static $version;

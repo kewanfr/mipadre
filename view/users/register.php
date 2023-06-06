@@ -1,22 +1,33 @@
 <div class="page-header">
   <h1>Inscription</h1>
   <?php echo $this->Session->flash(); ?>
-  <form action="<?= Router::url("users/register/hvVtRzMsy"); ?>" id="form" method="post">
+  <form action="<?= Router::url("users/register"); ?>" id="form" method="post">
     <div class="form-group row">
       <div class="col">
 
-        <?= $this->Form->input("login", "Nom d'utilisateur", array("invalidFeedback" => "", "required" => "true")); ?>
+        <?= $this->Form->input("firstname", "Prénom", array("invalidFeedback" => "", "required" => "true")); ?>
       </div>
       <div class="col">
-        <?= $this->Form->input("email", "Adresse mail", array("invalidFeedback" => "", "required" => "true")); ?>
+        <?= $this->Form->input("login", "Nom d'utilisateur", array("invalidFeedback" => "", "required" => "true")); ?>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col">
+        <?= $this->Form->input("email", "Adresse mail", array("invalidFeedback" => "", "required" => "true", "type" => "email")); ?>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col">
+        <?= $this->Form->input("password", "Mot de passe", array("type" => "passwordWithBtn", "invalidFeedback" => "", "required" => "true")); ?>
+      </div>
+      <div class="col">
+        <?= $this->Form->input("passwordConfirm", "Confirmation", array("type" => "passwordWithBtn","invalidFeedback" => "", "required" => "true")); ?>
       </div>
     </div>
     <div class="form-group">
-      <?= $this->Form->input("password", "Mot de passe", array("type" => "passwordWithBtn", "invalidFeedback" => "", "required" => "true")); 
-       ?>
     </div>
     <div class="form-group">
-      <?= $this->Form->input("passwordConfirm", "Confirmation", array("type" => "passwordWithBtn","invalidFeedback" => "", "required" => "true")); ?>
+      Déjà un compte ? <a href="<?= Router::url('users/login'); ?>">Se connecter</a>
     </div>
     <button type="submit" class="btn btn-primary">S'inscrire</button>
   </form>

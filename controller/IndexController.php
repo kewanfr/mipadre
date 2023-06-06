@@ -13,7 +13,8 @@ class IndexController extends Controller
       return $this->redirect('admin');
     }
     if($this->Session->isLoggedAs('user')){
-      return $this->e403("Vous n'êtes pas autorisé à accéder à cette page");
+      return $this->redirect('users/profile');
+      // return $this->e403("Vous n'êtes pas autorisé à accéder à cette page");
     }
     return $this->redirect('users/login');
   }

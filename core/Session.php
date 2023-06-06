@@ -86,7 +86,7 @@ class Session{
   }
 
   public function deleteCookie($key){
-    setcookie($key, '', time() - 3600, '/', null, false, true);
+    setcookie($key, '', time() - 3600, '/', '', false, true);
   }
 
   public function isLogged(){
@@ -110,9 +110,43 @@ class Session{
       if($user){
         $this->write('User', $user);
         return $user->id;
+      }else {
+        $this->deleteCookie('uid');
+        $this->deleteCookie('tk');
+        $this->delete('User');
       }
     }
     return false;
+  }
+
+  public function fetchAndUpdateSessionUser($id){
+
+    $this->loadModel('User');
+
+    $user = $this->User->findFirst(array(
+      'conditions' => array(
+        'id' => $id,
+      )
+    ));
+    if($user){
+      $this->write('User', $user);
+      return $user->id;
+    }else {
+      $this->deleteCookie('uid');
+      $this->deleteCookie('tk');
+      $this->delete('User');
+    }
+  }
+
+  public function updateSessionUser($user){
+    if($user){
+      $this->write('User', $user);
+      return $user->id;
+    }else {
+      $this->deleteCookie('uid');
+      $this->deleteCookie('tk');
+      $this->delete('User');
+    }
   }
 
   public function isLoggedAs($type = "user"){
