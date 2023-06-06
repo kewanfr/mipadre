@@ -5,27 +5,6 @@
 
 <?= $this->Session->flash(); ?>
 <a type="button" class="btn btn-info mb-4" href="<?= Router::url("admin/users/edit/") ?>">Ajouter un utilisateur</a>
-  <div class="modal fade" id="resetModal" tabindex="1" role="dialog" aria-labelledby="resetModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id=resetModalLabel> Supprimer cet utilisateur </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"> &times; </span>
-          </button>
-        </div>
-        <div class="modal-body">Voulez-vous remettre à 0 le nombre de bouteilles ?</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"> Annuler </button>
-          <form action="" method="POST">
-            <button type="submit" class="btn btn-warning btn-block">Mettre à 0</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-
   
 <table id="users-table" class="table table-striped table-bordered table-hover display">
   <thead>
@@ -35,6 +14,7 @@
       <th scope="col" name="login">Nom d'utilisateur</th>
       <th scope="col" name="email">Adresse E-mail</th>
       <th scope="col" name="role">Role</th>
+      <th scope="col" name="actions"></th>
     </tr>
   </thead>
   <tbody>
@@ -45,6 +25,12 @@
         <td class="bold"><?= $user->login ?></td>
         <td class="bold"><?= $user->email ?></td>
         <td class="bold"><?= $user->role ?></td>
+        
+        <td>
+          <div class="nowrap">
+            <a type="button" class="btn btn-info btn-sm" href="<?= Router::url("admin/users/edit/" . $user->id) ?>">Editer</a>
+          </div>
+        </td>
       </tr>
 
     <?php } ?>
@@ -81,6 +67,10 @@
         {
           name: "role",
           orderable: true,
+        },
+        {
+          name: "actions",
+          orderable: false,
         },
       ],
       order: [

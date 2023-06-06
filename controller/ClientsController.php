@@ -95,15 +95,15 @@ class ClientsController extends Controller
       $d['title'] = "Modifier " . $this->request->data->name;
     }
     $users = $this->User->getUsers("id, firstname, login, email, role");
-    $dbUsers = $this->User->getUsers("id, firstname, login, email, role");
-    $d["users"] = array();
-    $d["users"][0] = " ";
-    if(!$this->request->data) $this->request->data = (object) array();
-    if($nextCode) $this->request->data->code = $nextCode;
-    foreach ($dbUsers as $us) {
-      $d["users"][$us->id] = $us->firstname;
+    $d['users'] = array(
+      " "
+    );
+    foreach ($users as $key => $user) {
+      $d['users'][$user->id] = $user->firstname." (" . $user->login . ")";
     }
-
+    if(!$this->request->data) $this->request->data = (object) array();
+    if(isset($nextCode)) $this->request->data->code = $nextCode;
+ 
     $this->set($d);
   }
 
