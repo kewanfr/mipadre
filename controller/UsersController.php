@@ -99,8 +99,10 @@ class UsersController extends Controller
 
   function logout()
   {
-    $this->Session->delete('User');
-    $this->Session->setFlash('Vous êtes maintenant déconnecté', 'success');
+    $this->Session->writeCookie('tk', '', -1);
+    $this->Session->writeCookie('uid', '', -1);
+    $this->Session->write('User', null);
+    $this->Session->setFlash('Déconnexion Réussie !', 'success', 1);
     $this->redirect('users/login');
   }
 
@@ -206,17 +208,11 @@ class UsersController extends Controller
           break;
 
         case 'password':
-          $oldPassword = $this->request->data->old_password;
           $newPassword = $this->request->data->new_password;
           $newPasswordConfirm = $this->request->data->confirm_new_password;
 
-          if(empty($oldPassword) || empty($newPassword) || empty($newPasswordConfirm)) {
+          if(empty($newPassword) || empty($newPasswordConfirm)) {
             $this->Session->setFlash('Veuillez remplir tous les champs', 'danger');
-            return $this->redirect('users/profile#password');;
-          }
-
-          if(!password_verify($oldPassword, $oldUser->password)) {
-            $this->Session->setFlash('Ancien mot de passe incorrect', 'danger');
             return $this->redirect('users/profile#password');;
           }
 
@@ -246,5 +242,16 @@ class UsersController extends Controller
       $this->Session->write('User', $user);
     }
     $this->redirect('users/profile#'.$type);
+  }
+
+  function admin_list(){
+    $this->loadModel('User');
+    $users = $this->User->find(array(
+      'fields' => 'id, login, email, role',
+      'conditions' => array(
+        'role' => 'user'
+      )
+    ));
+    $this->set('users', $users);
   }
 }

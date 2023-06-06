@@ -30,6 +30,7 @@
 <table id="cavistes-table" class="table table-striped table-bordered table-hover display">
   <thead>
     <tr>
+      <th scope="col" name="id">ID</th>
       <th scope="col" name="name">Nom</th>
       <th scope="col" name="bouteilles" style="width: 1%"><i class="fa-regular fa-bottle-droplet fa-fw"></i></th>
       <th scope="col" name="carte">
@@ -51,6 +52,7 @@
     <?php foreach ($clients as $key => $client) { ?>
 
       <tr>
+        <td class="bold"><?= $client->code ?></td>
         <td class="bold"><?= $client->name ?></td>
         <td><span class="badge badge-<?= $client->badgeColor ?>"><?= $client->nb_bouteilles ?></span>
         <td>
@@ -173,7 +175,12 @@
         "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/French.json"
       },
       pageLength: 50,
-      columns: [{
+      columns: [
+        {
+          name: "code",
+          orderable: true,
+        },
+        {
           name: "name",
           orderable: true,
         },

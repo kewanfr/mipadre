@@ -10,6 +10,10 @@ class Client extends Model
       )
     ));
   }
+
+  public function getLastClient(){
+    return $this->findLast(array());
+  }
 }
 
 ?>

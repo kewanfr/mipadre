@@ -74,7 +74,7 @@ class Form{
     $html .= '<label for="'.$name.'">'.$label.'</label>';
     $attr = '';
     foreach($options as $k => $v){
-      if($k != 'type'){
+      if($k != 'type' && $k != 'options'){
         $attr .= $k.'="'.$v.'"';
       }
     }
@@ -93,6 +93,17 @@ class Form{
         </div>';
       $html .= $invalidFeedback;
       $html .= '</div>';
+    }else if ($type == 'select') {
+      $html .= '<select name="'.$name.'" id="'.$name.'" class="form-control"'.$attr.'>';
+      foreach($options['options'] as $k => $v){
+        $html .= '<option value="'.$k.'"';
+        if($k == $value){
+          $html .= ' selected';
+        }
+        $html .= '>'.$v.'</option>';
+      }
+      $html .= '</select>';
+      $html .= $invalidFeedback;
     }else{
       $html .= '<input type="'.$type.'" name="'.$name.'" id="'.$name.'" value="'.$value.'" class="form-control"'.$attr.'>';
       $html .= $invalidFeedback;

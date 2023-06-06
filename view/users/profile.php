@@ -28,6 +28,7 @@
             <h5 class="card-title mb-0">Mes informations</h5>
           </div>
           <div class="card-body">
+            <p>Prénom : <strong><?= $user->firstname; ?></strong></p>
             <p>Nom d'utilisateur : <strong><?= $user->login; ?></strong></p>
             <p>Email : <strong><?= $user->email; ?></strong></p>
             <p>Permission : <strong><?= $user->role; ?></strong></p>
@@ -76,18 +77,6 @@
           </div>
           <div class="card-body">
             <form method="post" action="<?= Router::url("users/update/password") ?>">
-
-              <div class="form-group">
-                <label for="old_password">Ancien mot de passe :</label>
-                <div class="input-group">
-                  <input type="password" name="old_password" id="old_password" class="form-control" required autocomplete="on">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="show-old_password">
-                      <i class="fa fa-eye-slash"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
 
               <div class="form-group">
                 <label for="new_password">Nouveau mot de passe :</label>
