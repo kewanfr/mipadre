@@ -120,6 +120,11 @@ class Model
     return current($this->find($req));
   }
 
+  public function findLast($req){
+    $res = $this->find($req);
+    return $res[count($res)-1];
+  }
+
   public function findCount($conditions)
   {
     $res = $this->findFirst(array(

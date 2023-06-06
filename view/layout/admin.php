@@ -32,6 +32,9 @@ $pageName = "home";
         <li class="nav-item <?= $pageName == 'clients' ? 'active' : '' ?>">
           <a class="nav-link" href="<?= Router::url("admin/clients/") ?>">Liste des Clients</a>
         </li>
+        <li class="nav-item <?= $pageName == 'users' ? 'active' : '' ?>">
+          <a class="nav-link" href="<?= Router::url("admin/users/list") ?>">Utilisateurs  </a>
+        </li>
       </ul>
       <ul class="navbar-nav mr-right">
         <?php if ($this->Session->isLogged()) : ?>
